@@ -13,7 +13,7 @@ class TicTacToe_Game:
 
     Tile = "X"
 
-    boardPositions = []
+    board_positions = []
 
     strikePossibilities = (
         [(0, 0),]
@@ -43,6 +43,15 @@ class TicTacToe_Game:
         (4, 4) : "9"
     }
 
+    def get_square_value(self, squareNumber):
+        return self.positions[squareNumber][1]      # Gets square's value
+       
+    def get_square_coords(self, squareNumber):
+        return self.positions[squareNumber][0]      # Gets square's coords
+        
+    def set_square_value(self, squareNumber, value):
+        self.positions[squareNumber][1] = value                     # Setting square values
+        self.values[self.get_square_coords(squareNumber)] = value   # In both positions and values
 
     def __init__(self):
         pass
@@ -61,29 +70,33 @@ class TicTacToe_Game:
                     print("-", end="")
             print()
 
-    def updatePositions(self, square, tileChoice):
-        positionObtained = self.positions[square][0]    # coords to corresponding user square
-        self.boardPositions.append(square)              # appending coords to list for later checking
+    def update_positions(self, square, tileChoice):
+        positionObtained = self.get_square_coords()  # coords to corresponding user square
+        self.board_positions.append(square)              # appending coords to list for later checking
         self.values[positionObtained] = tileChoice      # updating values with user's choice (X or O)
 
-    def computerTile(self, choice):
+
+    def computer_tile(self, choice):
         if choice == "X":       # if the user has picked 'X' 
             self.Tile = "O"     # then computer gets assigned with 'O'
 
-    def computerMove(self, tileChoice):
+    # function to simulate computer's turn 
+    def computer_move(self, tileChoice):
         computerSquare = randint(1, 9)
 
         while True:
-            if computerSquare not in self.boardPositions:
-                self.boardPositions.append(computerSquare)
+            if computerSquare not in self.board_positions:
+                self.board_positions.append(computerSquare)
                 break
             else:
                 computerSquare.randint(1, 9)
 
-        Game.updatePositions(computerSquare, tileChoice)
+        Game.update_positions(computerSquare, tileChoice)
 
     
+    # checking the board if there is a strke
     def checkStrike(self):
+
         
 
 Header()
@@ -91,7 +104,7 @@ choice = input("Choose Wisely:")
 
 while choice in ['X', 'O']:
 
-    Game.computerTile(choice)
+    Game.computer_tile(choice)
     Game = TicTacToe_Game()
     Game.generate_board()
     
@@ -102,8 +115,8 @@ while choice in ['X', 'O']:
         print("Thanks for playing the game!", end="")
         break
     
-    Game.updatePositions(int(squareChoice), choice)
-    Game.computerMove()
+    Game.update_positions(int(squareChoice), choice)
+    Game.computer_move()
 
 
 
