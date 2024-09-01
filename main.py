@@ -2,21 +2,28 @@
 
 from random import randint
 
+def Header():
+    print("+---------------------------------+")
+    print("|  Welcome to the TicTacToe Game! |")
+    print("+---------------------------------+")
+    print("|      Choose your Champion!      |")
+    print("+--------- X --- | --- O ---------+")
+
 class TicTacToe_Game:
 
     userPositons = []
     boardPositions = []
 
     positions = {
-        "square1": [(0, 0), "1"],
-        "square2": [(0, 2), "2"],
-        "square3": [(0, 4), "3"],
-        "square4": [(2, 0), "4"],
-        "square5": [(2, 2), "5"],
-        "square6": [(2, 4), "6"],
-        "square7": [(4, 0), "7"],
-        "square8": [(4, 2), "8"],
-        "square9": [(4, 4), "9"]
+        1: [(0, 0), "1"],
+        2: [(0, 2), "2"],
+        3: [(0, 4), "3"],
+        4: [(2, 0), "4"],
+        5: [(2, 2), "5"],
+        6: [(2, 4), "6"],
+        7: [(4, 0), "7"],
+        8: [(4, 2), "8"],
+        9: [(4, 4), "9"]
     }
 
     values = {
@@ -49,25 +56,34 @@ class TicTacToe_Game:
                     print("-", end="")
             print()
 
-    def updatePositions(self, square, userChoice):
-        positionObtained = self.positions[square][0]
-        TicTacToe_Game.userPositons.append(positionObtained)
-        self.values[positionObtained] == userChoice
+    def updatePositions(self, square, tileChoice):
+        positionObtained = self.positions[square][0]    # coords to corresponding user square
+        self.userPositons.append(positionObtained)      # appending coords to list for later checking
+        self.values[positionObtained] = tileChoice      # updating values with user's choice (X or O)
 
 
-print("+---------------------------------+")
-print("|  Welcome to the TicTacToe Game! |")
-print("+---------------------------------+")
-print("|      Choose your Champion!      |")
-print("+--------- X --- | --- O ---------+")
 
-
+Header()
 choice = input("Choose Wisely:")
 
-while choice in :
+while choice in ['X', 'O']:
+
     Game = TicTacToe_Game()
     Game.generate_board()
 
-    squareChoice = input("Enter square number as seen on screen:")
+    squareChoice = input("Enter square number as seen on screen (Press any letter to exit!):")
+    if not squareChoice.isdigit():
+        print("Thanks for playing the game!", end="")
+        break
+    Game.updatePositions(int(squareChoice), choice)
+
+
+
+
+
+
+
+
+
 
     
