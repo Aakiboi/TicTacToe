@@ -40,7 +40,7 @@ class TicTacToe_Game:
         for i in range(5):
             for j in range(5):
                 if i % 2 == 0 and j % 2 == 0:
-                    print(TicTacToe_Game.values[(i, j)], end="")
+                    print(self.values[(i, j)], end="")
                 elif j in [1, 3] and i in [0, 2, 4]:
                     print("|", end="")
                 elif j in [1, 3] and i in [1, 3]:
@@ -49,8 +49,25 @@ class TicTacToe_Game:
                     print("-", end="")
             print()
 
+    def updatePositions(self, square, userChoice):
+        positionObtained = self.positions[square][0]
+        TicTacToe_Game.userPositons.append(positionObtained)
+        self.values[positionObtained] == userChoice
+
+
+print("+---------------------------------+")
+print("|  Welcome to the TicTacToe Game! |")
+print("+---------------------------------+")
+print("|      Choose your Champion!      |")
+print("+--------- X --- | --- O ---------+")
+
+
+choice = input("Choose Wisely:")
+
+while choice in :
+    Game = TicTacToe_Game()
+    Game.generate_board()
+
+    squareChoice = input("Enter square number as seen on screen:")
+
     
-        
-    
-test1 = TicTacToe_Game()
-test1.generate_board()
