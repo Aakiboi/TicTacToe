@@ -69,7 +69,7 @@ class TicTacToe_Game:
     def update_positions(self, square, tileChoice):
         positionObtained = self.get_square_coords(square)       # coords to corresponding user square
         self.board_positions.append(square)                     # appending coords to list for later checking
-        self.set_square_value(square, tileChoice)             # updating values with user's choice (X or O)
+        self.set_square_value(square, tileChoice)               # updating values with user's choice (X or O)
 
     def computer_tile(self, choice):
         if choice == "X":       # if the user has picked 'X' 
@@ -90,7 +90,7 @@ class TicTacToe_Game:
 
     
     # checking the board if there is a strike
-    def checkStrike(self):
+    def check_strike(self):
         if self.get_square_value(1) == self.get_square_value(2) == self.get_square_value(3):
             return(self.get_square_value(1))
         elif self.get_square_value(4) == self.get_square_value(5) == self.get_square_value(6):
@@ -136,8 +136,8 @@ while choice in ['X', 'O']:
         Game.update_positions(int(squareChoice), choice)
         Game.computer_move()
 
-        if Game.checkStrike() != False:
-            print(Game.checkStrike() + " won!")
+        if Game.check_strike() != False:
+            print(Game.check_strike() + " won!")
             print("Thank you for playing the game!", end="")
             break
     
