@@ -7,17 +7,13 @@ def Header():
     print("|  Welcome to the TicTacToe Game! |")
     print("+---------------------------------+")
     print("|      Choose your Champion!      |")
-    print("+--------- X --- | --- O ---------+")
+    print("+--------} X --- | --- O {--------+")
 
 class TicTacToe_Game:
 
     Tile = "X"
 
     board_positions = []
-
-    strikePossibilities = (
-        [(0, 0),]
-    )
 
     positions = {
         1: [(0, 0), "1"],
@@ -71,17 +67,16 @@ class TicTacToe_Game:
             print()
 
     def update_positions(self, square, tileChoice):
-        positionObtained = self.get_square_coords()  # coords to corresponding user square
-        self.board_positions.append(square)              # appending coords to list for later checking
-        self.values[positionObtained] = tileChoice      # updating values with user's choice (X or O)
-
+        positionObtained = self.get_square_coords(square)       # coords to corresponding user square
+        self.board_positions.append(square)                     # appending coords to list for later checking
+        self.set_square_value(square, tileChoice)             # updating values with user's choice (X or O)
 
     def computer_tile(self, choice):
         if choice == "X":       # if the user has picked 'X' 
             self.Tile = "O"     # then computer gets assigned with 'O'
 
     # function to simulate computer's turn 
-    def computer_move(self, tileChoice):
+    def computer_move(self):
         computerSquare = randint(1, 9)
 
         while True:
@@ -89,43 +84,62 @@ class TicTacToe_Game:
                 self.board_positions.append(computerSquare)
                 break
             else:
-                computerSquare.randint(1, 9)
+                computerSquare = randint(1, 9)
 
-        Game.update_positions(computerSquare, tileChoice)
+        self.update_positions(computerSquare, self.Tile)
 
     
-    # checking the board if there is a strke
+    # checking the board if there is a strike
     def checkStrike(self):
-
+        if self.get_square_value(1) == self.get_square_value(2) == self.get_square_value(3):
+            return(self.get_square_value(1))
+        elif self.get_square_value(4) == self.get_square_value(5) == self.get_square_value(6):
+            return(self.get_square_value(4))
+        elif self.get_square_value(7) == self.get_square_value(8) == self.get_square_value(9):
+            return(self.get_square_value(7))
+        elif self.get_square_value(1) == self.get_square_value(4) == self.get_square_value(7):
+            return(self.get_square_value(1))
+        elif self.get_square_value(2) == self.get_square_value(5) == self.get_square_value(8):
+            return(self.get_square_value(2))
+        elif self.get_square_value(3) == self.get_square_value(9) == self.get_square_value(6):
+            return(self.get_square_value(3))
+        elif self.get_square_value(1) == self.get_square_value(5) == self.get_square_value(9):
+            return(self.get_square_value(1))
+        elif self.get_square_value(7) == self.get_square_value(5) == self.get_square_value(3):
+            return(self.get_square_value(7)) 
+        else:
+            return(False)
         
-
+        
 Header()
-choice = input("Choose Wisely:")
+choice = input("Choose Wisely: ")
 
 while choice in ['X', 'O']:
 
-    Game.computer_tile(choice)
+    
     Game = TicTacToe_Game()
+    Game.computer_tile(choice.upper())
     Game.generate_board()
     
 
-    squareChoice = input("Enter square number as seen on screen (Press any letter to exit.):")
+    squareChoice = input("Enter square number as seen on screen (Press any letter to exit.): ")
 
     if not squareChoice.isdigit():
         print("Thanks for playing the game!", end="")
         break
+
+    elif len(Game.board_positions) == 10:
+        print("Thanks for playing the game. It is a draw!", end="")
+        break
+
+    if int(squareChoice) not in Game.board_positions:
+        Game.update_positions(int(squareChoice), choice)
+        Game.computer_move()
+
+        if Game.checkStrike() != False:
+            print(Game.checkStrike() + " won!")
+            print("Thank you for playing the game!", end="")
+            break
     
-    Game.update_positions(int(squareChoice), choice)
-    Game.computer_move()
-
-
-
-
-
-
-
-
-
-
-
-    
+    else:
+        print("Enter a valid square number!")
