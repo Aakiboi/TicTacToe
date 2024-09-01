@@ -11,8 +11,13 @@ def Header():
 
 class TicTacToe_Game:
 
-    userPositons = []
+    Tile = "X"
+
     boardPositions = []
+
+    strikePossibilities = (
+        [(0, 0),]
+    )
 
     positions = {
         1: [(0, 0), "1"],
@@ -58,24 +63,48 @@ class TicTacToe_Game:
 
     def updatePositions(self, square, tileChoice):
         positionObtained = self.positions[square][0]    # coords to corresponding user square
-        self.userPositons.append(positionObtained)      # appending coords to list for later checking
+        self.boardPositions.append(square)              # appending coords to list for later checking
         self.values[positionObtained] = tileChoice      # updating values with user's choice (X or O)
 
+    def computerTile(self, choice):
+        if choice == "X":       # if the user has picked 'X' 
+            self.Tile = "O"     # then computer gets assigned with 'O'
 
+    def computerMove(self, tileChoice):
+        computerSquare = randint(1, 9)
+
+        while True:
+            if computerSquare not in self.boardPositions:
+                self.boardPositions.append(computerSquare)
+                break
+            else:
+                computerSquare.randint(1, 9)
+
+        Game.updatePositions(computerSquare, tileChoice)
+
+    
+    def checkStrike(self):
+        
 
 Header()
 choice = input("Choose Wisely:")
 
 while choice in ['X', 'O']:
 
+    Game.computerTile(choice)
     Game = TicTacToe_Game()
     Game.generate_board()
+    
 
-    squareChoice = input("Enter square number as seen on screen (Press any letter to exit!):")
+    squareChoice = input("Enter square number as seen on screen (Press any letter to exit.):")
+
     if not squareChoice.isdigit():
         print("Thanks for playing the game!", end="")
         break
+    
     Game.updatePositions(int(squareChoice), choice)
+    Game.computerMove()
+
 
 
 
